@@ -11,14 +11,9 @@ API: https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&ap
 Source: Alpha Vantage
 
 TODO:
-1.以一般化凱莉當作基礎，i.e. 報酬為b1,b2(見留言附圖) 
-2.用停損停利當作報酬向量，進場訊號為ma5跟ma10的黃金交叉 
-3.moving windows當作勝率的估計，所以下注比率會改變 
-4.用台股模擬 
-
-a. general kelly, with alpha, beta
-b. two outcome (TODO: multiple outcome)
-c. mathematical model merged with general kelly f(p, b1,b2, alpha, beta, not l)
+a. general kelly, with alpha, beta--> what is the optimal RCF when given alpha, beta and general kelly?
+b. mathematical model merged with general kelly f(p, b1,b2, alpha, beta, not l)
+c. two outcome (TODO: multiple outcome)
 d. theory-->ch3
 e. experiment-->ch4
 
@@ -37,11 +32,7 @@ class stock_price_data():
 
 def win_loss_refine(win_loss):
     def func(x): 
-<<<<<<< HEAD
         if x==True: 
-=======
-        if x==True:
->>>>>>> 5586699d3b25d7e6f0ae3d257f45ea1abd63f737
             return 100
         elif x==False:
             return -100
@@ -180,10 +171,6 @@ def optimal_f_of_general_kelly(b1, b2, p):
 
 def test():
     # test of MA
-<<<<<<< HEAD
-    
-=======
->>>>>>> 5586699d3b25d7e6f0ae3d257f45ea1abd63f737
     stock_price = [100,10,10,11,15,1600,10,8,210]
     print("stock_price:", stock_price)
     MA3 = (MA_with_specified_period(3, stock_price))
