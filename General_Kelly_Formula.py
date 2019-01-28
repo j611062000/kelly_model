@@ -37,7 +37,11 @@ class stock_price_data():
 
 def win_loss_refine(win_loss):
     def func(x): 
+<<<<<<< HEAD
         if x==True: 
+=======
+        if x==True:
+>>>>>>> 5586699d3b25d7e6f0ae3d257f45ea1abd63f737
             return 100
         elif x==False:
             return -100
@@ -176,7 +180,10 @@ def optimal_f_of_general_kelly(b1, b2, p):
 
 def test():
     # test of MA
+<<<<<<< HEAD
     
+=======
+>>>>>>> 5586699d3b25d7e6f0ae3d257f45ea1abd63f737
     stock_price = [100,10,10,11,15,1600,10,8,210]
     print("stock_price:", stock_price)
     MA3 = (MA_with_specified_period(3, stock_price))
