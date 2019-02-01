@@ -69,7 +69,7 @@ def simulation_of_f(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expect
 
     # accumulation of wealth given specified f
     for f in f_range:
-        init_wealth = 1     
+        init_wealth = 1
         for outcome in simulation_path:
             init_wealth = init_wealth * (1 + f * (outcome - 1))
             simulation_f[f].append(init_wealth)
@@ -84,13 +84,17 @@ def simulation_of_f(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expect
             f_MDD_below_alpha[f] += 1
 
 
-def f_star(experiments,f_range, number_of_experiment, time_period, return_vector, prob_vector, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
+def f_star(experiments, f_range, number_of_experiment, time_period, return_vector, prob_vector, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
 
     for index in range(0, len(experiments), 4):
-        simulation_of_f(experiments[index], alpha, f_range, f_MDD_below_alpha, f_expected_wealth)
-        simulation_of_f(experiments[index + 1], alpha, f_range, f_MDD_below_alpha, f_expected_wealth)
-        simulation_of_f(experiments[index + 2], alpha, f_range, f_MDD_below_alpha, f_expected_wealth)
-        simulation_of_f(experiments[index + 3], alpha, f_range, f_MDD_below_alpha, f_expected_wealth)
+        simulation_of_f(experiments[index], alpha,
+                        f_range, f_MDD_below_alpha, f_expected_wealth)
+        simulation_of_f(experiments[index + 1], alpha,
+                        f_range, f_MDD_below_alpha, f_expected_wealth)
+        simulation_of_f(experiments[index + 2], alpha,
+                        f_range, f_MDD_below_alpha, f_expected_wealth)
+        simulation_of_f(experiments[index + 3], alpha,
+                        f_range, f_MDD_below_alpha, f_expected_wealth)
 
 
 def data_to_graph(f_range, number_of_experiment, beta, alpha, f_MDD_below_alpha, f_expected_wealth, prob=0):
@@ -106,7 +110,8 @@ def data_to_graph(f_range, number_of_experiment, beta, alpha, f_MDD_below_alpha,
     temp = sorted(temp)
 
     plt.figure(1)
-    plt.plot([x[0] for x in temp], [x[1] for x in temp], label="alpha = {}".format(alpha))
+    plt.plot([x[0] for x in temp], [x[1]
+                                    for x in temp], label="alpha = {}".format(alpha))
 
     # plot
     # plt.figure(2)
@@ -125,8 +130,8 @@ def plot_info(time_period, number_of_experiment, plt, f_with_max_return):
         number_of_experiment), {'fontsize': 25})
     plt.legend()
 
-
     plt.show()
+
 
 if __name__ == '__main__':
 
@@ -147,11 +152,12 @@ if __name__ == '__main__':
 
         # create the list containing simulation of return
         experiments = [simulation_of_return(
-        return_vector, prob_vector, time_period) for i in range(number_of_experiment)]
+            return_vector, prob_vector, time_period) for i in range(number_of_experiment)]
 
         for alp in alpha:
             # f_MDD_below_alpha: storing how many times of every f which is below MDD
-            f_MDD_below_alpha, f_expected_wealth = defaultdict(lambda: 0), defaultdict(lambda: 0)
+            f_MDD_below_alpha, f_expected_wealth = defaultdict(
+                lambda: 0), defaultdict(lambda: 0)
             f_star(
                 experiments,
                 f_range,
@@ -163,29 +169,26 @@ if __name__ == '__main__':
                 beta,
                 f_MDD_below_alpha,
                 f_expected_wealth
-                )
+            )
 
             data_to_graph(
                 f_range,
-                number_of_experiment, 
-                beta, 
+                number_of_experiment,
+                beta,
                 alp,
-                f_MDD_below_alpha, 
+                f_MDD_below_alpha,
                 f_expected_wealth
-                )
+            )
 
-
-
-       
         # optimal_f_to_graph(alpha_optimal_f)
         plot_info(
             time_period,
-            number_of_experiment, 
-            plt, 
+            number_of_experiment,
+            plt,
             f_with_max_return(
-                f_range, 
-                number_of_experiment, 
-                f_MDD_below_alpha, 
+                f_range,
+                number_of_experiment,
+                f_MDD_below_alpha,
                 f_expected_wealth
-                )
             )
+        )

@@ -11,8 +11,12 @@ API: https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=AAPL&ap
 Source: Alpha Vantage
 
 TODO:
-a. general kelly, with alpha, beta--> what is the optimal RCF when given alpha, beta and general kelly?
-b. mathematical model merged with general kelly f(p, b1,b2, alpha, beta, not l)
+1. if the mathematical model can be modified as f(p, b1, b2, alpha, beta)?
+-->how kelly work with mathematical model?
+-->f(p, b1, b2, alpha, beta)
+
+a. mathematical model merged with general kelly f(p, b1,b2, alpha, beta, not l)
+b. general kelly, with alpha, beta--> what is the optimal RCF when given alpha, beta and general kelly?
 c. two outcome (TODO: multiple outcome)
 d. theory-->ch3
 e. experiment-->ch4
@@ -29,6 +33,11 @@ class stock_price_data():
         self.MA10 = None
         self.entry_signal = None
         self.win_loss = None
+
+def optimal_f_of_general_kelly(b1, b2, p):
+
+    assert p < 1 and p > 0, "p is not appropriate!"
+    return (b1*p-b2*(1-p))/(b1*b2)
 
 def win_loss_refine(win_loss):
     def func(x): 
@@ -123,7 +132,7 @@ def parse_time(time_as_string, format="%Y-%m-%d"):
     return datetime.strptime(time_as_string, format)
 
 
-def extract_data_from_json(file_name="0050_2008_2019_data.json",
+def extract_data_from_json(file_name="./data/0050_2008_2019_data.json",
                            target_key="Time Series (Daily)",
                            open_mode="r"):
 
@@ -163,10 +172,6 @@ def MA_with_specified_period(days, data):
     return MA
 
 
-def optimal_f_of_general_kelly(b1, b2, p):
-
-    assert p < 1 and p > 0, "p is not appropriate!"
-    return (b1*p-b2*(1-p))/(b1*b2)
 
 
 def test():
