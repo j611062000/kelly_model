@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 from numpy.random import choice
-from random import uniform
+# from random import uniform
 from collections import defaultdict
 from itertools import repeat
+import json
 
 """
 To do: 1. alpha 2. equation 3.plot
@@ -78,7 +79,6 @@ def simulation_of_f(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expect
 
     # counting the number of f which is below the alpha
     for f in f_range:
-        # if 1 - abs(MDD(simulation_f[f])) < alpha:
         if abs(MDD(simulation_f[f])) < alpha:
 
             f_MDD_below_alpha[f] += 1
@@ -122,12 +122,12 @@ def data_to_graph(f_range, number_of_experiment, beta, alpha, f_MDD_below_alpha,
 
 def plot_info(time_period, number_of_experiment, plt, f_with_max_return):
     plt.figure(1)
-    plt.xlabel('fraction (time_period = {})'.format(time_period), fontsize=30)
+    plt.xlabel('fraction (time_period = {}, odds = [2,-1], prob = [0.5, 0.5])'.format(time_period), fontsize=15)
     plt.ylabel('Prob(MDD < alpha)', fontsize=30)
 
     # plt.axhline(y=beta, linewidth=1, color='black')
-    plt.text(0.5, 0.6, 'Number of experiments is {}'.format(
-        number_of_experiment), {'fontsize': 25})
+    plt.text(0.5, 0.6, '# of experiments is {}'.format(
+        number_of_experiment), {'fontsize': 15})
     plt.legend()
 
     plt.show()
@@ -143,52 +143,57 @@ if __name__ == '__main__':
     """
     return_vector = [0, 3]
     alpha_optimal_f = {}
-    alpha, beta,  = [x / 100 for x in range(10, 99, 10)], 0.1
+    alpha = [0.3]
+    # alpha = [x / 100 for x in range(10, 99, 10)]
+    beta  =  0.1
     f_range = [x / 100 for x in range(0, 101)]
-    number_of_experiment = 100
-    T = [10]
+    number_of_experiment = 5000
+    time_period = 10
     prob_vector = [1 / len(return_vector)] * len(return_vector)
-    for time_period in T:
+    # for time_period in T:
 
-        # create the list containing simulation of return
-        experiments = [simulation_of_return(
-            return_vector, prob_vector, time_period) for i in range(number_of_experiment)]
+    # create the list containing simulation of return
+    with open("./data/5000_experiment.json", "r") as file:
+        experiments = [x[0:9] for x in json.load(file).values()]
 
-        for alp in alpha:
-            # f_MDD_below_alpha: storing how many times of every f which is below MDD
-            f_MDD_below_alpha, f_expected_wealth = defaultdict(
-                lambda: 0), defaultdict(lambda: 0)
-            f_star(
-                experiments,
-                f_range,
-                number_of_experiment,
-                time_period,
-                return_vector,
-                prob_vector,
-                alp,
-                beta,
-                f_MDD_below_alpha,
-                f_expected_wealth
-            )
+    # experiments = [simulation_of_return(
+        # return_vector, prob_vector, time_period) for i in range(number_of_experiment)]
 
-            data_to_graph(
-                f_range,
-                number_of_experiment,
-                beta,
-                alp,
-                f_MDD_below_alpha,
-                f_expected_wealth
-            )
-
-        # optimal_f_to_graph(alpha_optimal_f)
-        plot_info(
-            time_period,
+    for alp in alpha:
+        # f_MDD_below_alpha: storing how many times of every f which is below MDD
+        f_MDD_below_alpha, f_expected_wealth = defaultdict(
+            lambda: 0), defaultdict(lambda: 0)
+        f_star(
+            experiments,
+            f_range,
             number_of_experiment,
-            plt,
-            f_with_max_return(
-                f_range,
-                number_of_experiment,
-                f_MDD_below_alpha,
-                f_expected_wealth
-            )
+            time_period,
+            return_vector,
+            prob_vector,
+            alp,
+            beta,
+            f_MDD_below_alpha,
+            f_expected_wealth
         )
+
+        data_to_graph(
+            f_range,
+            number_of_experiment,
+            beta,
+            alp,
+            f_MDD_below_alpha,
+            f_expected_wealth
+        )
+
+    # optimal_f_to_graph(alpha_optimal_f)
+    plot_info(
+        time_period,
+        number_of_experiment,
+        plt,
+        f_with_max_return(
+            f_range,
+            number_of_experiment,
+            f_MDD_below_alpha,
+            f_expected_wealth
+        )
+    )
