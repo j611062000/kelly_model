@@ -143,8 +143,8 @@ if __name__ == '__main__':
     """
     return_vector = [0, 3]
     alpha_optimal_f = {}
-    alpha = [0.3]
-    # alpha = [x / 100 for x in range(10, 99, 10)]
+    # alpha = [0.3]
+    alpha = [x / 100 for x in range(10, 99, 10)]
     beta  =  0.1
     f_range = [x / 100 for x in range(0, 101)]
     number_of_experiment = 5000

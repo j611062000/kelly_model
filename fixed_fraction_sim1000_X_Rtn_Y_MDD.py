@@ -37,7 +37,7 @@ def MDD(prices, maxDrawdown=0):
 
     return maxDrawdown
 
-def generate_json(number_of_data,filename,time, prob, return_vector):
+def  (number_of_data,filename,time, prob, return_vector):
     temp = dict()
     for i in range(number_of_data):
         temp[str(i)] = generate_flip_outcome(time, prob, return_vector)
@@ -100,10 +100,11 @@ def finalRtn(number):
 def main():
     file_num = "10000_T"+str(time)
     
-    generate_json(number,"./data/"+str(file_num)+"_experiment.json",time, prob, return_vector)
+     (number,"./data/"+str(file_num)+"_experiment.json",time, prob, return_vector)
 
     price(init_wealth , fixed_fraction, file_num)
     MDD_(file_num)
     finalRtn(file_num)
+
 if __name__ == '__main__':
     main()
