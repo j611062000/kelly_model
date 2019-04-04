@@ -322,5 +322,4 @@ def main(stop_loss=-0.2, take_profit=0.05):
 
 if __name__ == '__main__':
     # test()
-    py_compile.compile('General_Kelly_Formula.py')
     main()

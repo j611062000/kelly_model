@@ -4,6 +4,7 @@ from bokeh.models import Span
 import json
 
 def plot(RTN, MDD, alpha, beta,T):
+
     p1 = figure(title="RTN x MDD, P(MDD<{}) = {}, Time_Period = {}, # of experiment = {}".format(abs(alpha), beta, T, 10000))
     p1.grid.grid_line_alpha=0.3
     p1.xaxis.axis_label = 'RTN'
@@ -14,7 +15,9 @@ def plot(RTN, MDD, alpha, beta,T):
     p1.renderers.extend([hline])
 
     return p1
+
 def main():
+    
     tmp = list()
     T = 30
     file_name = "10000_T"+str(T)
