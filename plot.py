@@ -1,7 +1,23 @@
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import gridplot
-from bokeh.models import Span
+from bokeh.models import Span, Range1d, LinearAxis
 import json
+
+def f_MDD_HPR_single_asset(f, MDD,HPR):
+    print(HPR)
+    p1 = figure(title="The relationship of fraction and MDD in 0050.tw")
+    p1.grid.grid_line_alpha=0.3
+    p1.xaxis.axis_label = 'fraction'
+    p1.yaxis.axis_label = 'MDD'
+    p1.y_range = Range1d(start=-0.6, end=0)
+    p1.extra_y_ranges = {"HPR": Range1d(start=0.988, end=1.001)}
+    p1.add_layout(LinearAxis(y_range_name="HPR", axis_label='HPR'), 'right')
+
+    p1.circle(f,MDD, color='#A6CEE3', legend='MDD', size = 4)
+    p1.circle(f,HPR, color='red', legend='HPR', size = 4, y_range_name="HPR")
+
+    show(p1)
+
 
 def plot(RTN, MDD, alpha, beta,T):
 
@@ -43,4 +59,17 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    fraction = list()
+    HPR = list()
+    MDD = list()
+    with open("./data/0050/0050_f_With_MDD.json", "r") as file:
+        data = json.load(file)
+        for f in data:
+            fraction.append(float(f)/100)
+            MDD.append(data[f])
+    with open("./data/0050/0050_HPR_and_f.json", "r") as file:
+        data = json.load(file)
+        for f in data:
+            HPR.append(data[f])
+    f_MDD_HPR_single_asset(fraction, MDD,HPR)
