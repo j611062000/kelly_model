@@ -1,7 +1,11 @@
 import json
 import matplotlib.pyplot as plt
+import time
 
 from collections import defaultdict
+from loadDataFromJson import loadAllDataFromJson
+from matplotlib.ticker import PercentFormatter
+from multiprocessing import Pool
 from numpy.random import choice
 
 
@@ -42,15 +46,15 @@ def simulation_of_f(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expect
             simulation_f[f].append(init_wealth)
 
         f_expected_wealth[f] += init_wealth
+
     # counting the number of f which is below the alpha
+    increment = 1/numberOfExperiment
+
     for f in f_range:
-        print(f,":",MDD(simulation_f[f]))
         if abs(MDD(simulation_f[f])) < alpha:
-            f_MDD_below_alpha[f] += 1
-    # print(f_MDD_below_alpha)
+            f_MDD_below_alpha[f] += increment
 
-
-def f_star(experiments, f_range, number_of_experiment, time_period, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
+def f_star(experiments, f_range, numberOfExperiment, timePeriod, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
 
     for index in range(0, len(experiments)):
         simulation_of_f(experiments[index], 
@@ -61,95 +65,93 @@ def f_star(experiments, f_range, number_of_experiment, time_period, alpha, beta,
         
 
 
-def data_to_graph(f_range, number_of_experiment, beta, alpha, f_MDD_below_alpha, f_expected_wealth, prob=0):
+def data_to_graph(f_range, numberOfExperiment, beta, alpha, f_MDD_below_alpha, f_expected_wealth, prob=0):
 
     # print out f which MDD is below alpha and prob is smaller than beta
-    temp = []
-    # alpha_optimal_f = f_with_max_return(f_range, number_of_experiment, f_MDD_below_alpha, f_expected_wealth)
+    temp = list()
+    # alpha_optimal_f = f_with_max_return(f_range, numberOfExperiment, f_MDD_below_alpha, f_expected_wealth)
 
     for f in f_MDD_below_alpha:
-        # if f == alpha_optimal_f:
-            # prob = f_MDD_below_alpha[f] / number_of_experiment
-        temp.append((f, f_MDD_below_alpha[f] / number_of_experiment))
+        temp.append((f, f_MDD_below_alpha[f]))
+
     temp = sorted(temp)
 
     plt.figure(1)
-    plt.plot([x[0] for x in temp], [x[1]
-                                    for x in temp], label="alpha = {}".format(alpha))
+    plt.plot([x[0] for x in temp], [x[1] for x in temp], label="alpha = {}".format(alpha))
 
 
 
-def plot_info(time_period, number_of_experiment, plt):
+def plot_info(timePeriod, numberOfExperiment, plt):
     plt.figure(1)
     plt.xlabel('fraction', fontsize=20)
     plt.ylabel('Prob(MDD < alpha)', fontsize=20)
     
 
     # plt.axhline(y=beta, linewidth=1, color='black')
-    plt.text(0.5, 1.15, 'Experiments: {}, Plays: {}'.format(number_of_experiment, time_period), 
+    plt.text(0.5, 1.15, 'Experiments: {}, Plays: {}'.format(numberOfExperiment, timePeriod), 
     {'fontsize': 15})
     
     plt.text(0.5, 1.1, 
     'Odds: {}'.format('Normal Distribution (mean = 0, std = 0.3333)'), 
     {'fontsize': 15})
-    
-    plt.legend()
 
+    # plt.gca().xaxis.set_major_formatter(PercentFormatter(1))
+    plt.legend()
     plt.show()
 
 
 if __name__ == '__main__':
 
-    """
-    alpha: 0~1, precision = 100
-    beta: 0~1, precision = 100
-    time_period = range(10,51,10)
-    risk_constrained_f (f_star)= f(alpha, beta, time_period, number_of_experiments)
-    """
-    alpha_optimal_f = dict()
-    alpha = [x / 100 for x in range(0, 10, 1)]
+    start_time = time.time()
+
+    dataLabel = "data"
+    flagLabel = "flag"
+    returnStyleLabel = "returnStyle"
+
     beta  =  0.1
-    f_range = [x / 100 for x in range(0, 101)]
-    number_of_experiment = 1
-    time_period = 2686
+    alpha = [x / 100 for x in range(0, 100, 10)]
+    f_range = [0.624]
+    # f_range = [x / 100 for x in range(0, 101, 1)]
+    
+    filename = "./data/0050/0050_simulated_return.json"
+    
+    ifOnlyLoadData = 1
 
-    # with open("./data/normal_dist_"+str(number_of_experiment)+"exps.json", "r") as file:
-        # data = json.load(file)["data"]
-        # experiments = [data[x] for x in data]
-    with open("./data/0050/0050_Return_Path.json", "r") as file:
-        experiments = [json.load(file)["Return Path"]]
-        # The format of experiments: [[],...,[]]
+    argsForLoadDataFromJson = [dataLabel, flagLabel, returnStyleLabel, filename]
+    experiments ,timePeriod, numberOfExperiment, returnStyle = loadAllDataFromJson(*argsForLoadDataFromJson)
 
+    if not ifOnlyLoadData:
 
-    for alp in alpha:
-        # f_MDD_below_alpha: storing how many times of every f which is below MDD
-        f_expected_wealth =  defaultdict(lambda: 0)
-        f_MDD_below_alpha = defaultdict(lambda: 0)
+        for alp in alpha:
+            f_expected_wealth = defaultdict(lambda: 0)
+            f_MDD_below_alpha = defaultdict(lambda: 0)
 
-        f_star(
-            experiments,
-            f_range,
-            number_of_experiment,
-            time_period,
-            alp,
-            beta,
-            f_MDD_below_alpha,
-            f_expected_wealth
+            f_star(
+                experiments,
+                f_range,
+                numberOfExperiment,
+                timePeriod,
+                alp,
+                beta,
+                f_MDD_below_alpha,
+                f_expected_wealth
+            )
+
+            data_to_graph(
+                f_range,
+                numberOfExperiment,
+                beta,
+                alp,
+                f_MDD_below_alpha,
+                f_expected_wealth
+            )
+
+        # optimal_f_to_graph(alpha_optimal_f)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        
+        plot_info(
+            timePeriod,
+            numberOfExperiment,
+            plt,
+        
         )
-
-        data_to_graph(
-            f_range,
-            number_of_experiment,
-            beta,
-            alp,
-            f_MDD_below_alpha,
-            f_expected_wealth
-        )
-
-    # optimal_f_to_graph(alpha_optimal_f)
-    plot_info(
-        time_period,
-        number_of_experiment,
-        plt,
-      
-    )

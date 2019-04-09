@@ -1,0 +1,7 @@
+Object: PathOfReturn, AggregatedPathOfReturn, Plot
+
+Memeber variable of PathOfReturn: plays, odds(prob.), MDD
+Memeber function of PathOfReturn: MDD
+
+Memeber variable of AggregatedPathOfReturn: 
+Memeber function of AggregatedPathOfReturn: calAlpha
