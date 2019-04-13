@@ -1,5 +1,7 @@
 import json
 
+from loadDataFromJson import loadJson
+
 def f_wealth_test(datas, f):
     simulation_of_f = list()
     final_wealth = 1
@@ -28,12 +30,21 @@ def MDD_test(prices, maxDrawdown=0):
 
     return maxDrawdown
 
+def main():
+    with open("./data/0050/0050_Return_Path.json", "r") as file:
+        data = json.load(file)["Return Path"]
 
-with open("./data/0050/0050_Return_Path.json", "r") as file:
-    data = json.load(file)["Return Path"]
+    with open("./data/0050/0050_f_With_MDD.json","w") as file:
+        tmp = dict()
+        for f in range(1,101):
+            tmp[str(f)] = MDD_test(f_wealth_test(data,f/100)[1])
+        json.dump(tmp,file,indent=4)
 
-with open("./data/0050/0050_f_With_MDD.json","w") as file:
-    tmp = dict()
-    for f in range(1,101):
-        tmp[str(f)] = MDD_test(f_wealth_test(data,f/100)[1])
-    json.dump(tmp,file,indent=4)
+if __name__ == "__main__":
+    alpha = 0.2
+    count = 0
+    datas = loadJson("./data/0050/0050_simulated_return_MDD.json")
+    for data in datas.values():
+        if data > -alpha:
+            count+=1
+    print(count)

@@ -115,12 +115,12 @@ if __name__ == '__main__':
     
     filename = "./data/0050/0050_simulated_return.json"
     
-    ifOnlyLoadData = 1
+    onlyLoadData = 1
 
     argsForLoadDataFromJson = [dataLabel, flagLabel, returnStyleLabel, filename]
-    experiments ,timePeriod, numberOfExperiment, returnStyle = loadAllDataFromJson(*argsForLoadDataFromJson)
+    experiments ,timePeriod, numberOfExperiment, returnStyle, flag = loadAllDataFromJson(*argsForLoadDataFromJson)
 
-    if not ifOnlyLoadData:
+    if not onlyLoadData:
 
         for alp in alpha:
             f_expected_wealth = defaultdict(lambda: 0)

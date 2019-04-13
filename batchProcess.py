@@ -1,9 +1,28 @@
 import json
 
-def loadJson(filename):
-    with open(filename, "r") as toBeSerialized:
-        serializedData = json.load(toBeSerialized)
-    return serializedData
+from datetime import datetime
+from loadDataFromJson import loadJson
+
+# flag : the data format of the value under the label, "data"
+
+SUFFIX_OF_PRICED_DATA = "_price.json"
+SUFFIX_OF_MDD_DATA = "_MDD.json"
+SUFFIX_OF_FINAL_RTN = "_FinalRtn.json"
+
+def createHeaderOfTemplateForJson(flag, returnStyle):
+    headerOfTemplateForJson = {
+        "metadata": {
+            "flag":flag,
+            "underlying": None,
+            "lengthOfEachExperiment": None,
+            "numberOfExperiments": None,
+            "returnStyle":returnStyle,
+            "time":str(datetime.today())
+        },
+        "data": None
+    }
+
+    return headerOfTemplateForJson
 
 def injectFractionToExperiment(aVectorOfReturn, fraction, retrunStyle):
     
@@ -38,7 +57,7 @@ def processBatchPriceAndDumpToJson(fraction, retrunStyle, experiments, flag, fil
     
         pricedDatas[str(count)] = injectFractionToExperiment(aVectorOfReturn, fraction, retrunStyle)
 
-    with open(fileNameWithoutDotJson+"_price.json","w") as file:
+    with open(fileNameWithoutDotJson + SUFFIX_OF_PRICED_DATA,"w") as file:
         json.dump(pricedDatas, file, indent = 4)
 
 
@@ -64,26 +83,26 @@ def processBatchMDDAndDumpToJson(fileNameWithoutDotJson):
     
     tmp = dict()
 
-    pricedDatas = loadJson(fileNameWithoutDotJson+"_price.json")
+    pricedDatas = loadJson(fileNameWithoutDotJson + SUFFIX_OF_PRICED_DATA)
     
     for count, key in enumerate(pricedDatas):
         tmp[str(count)] = MDD(pricedDatas[key])
     
-    with open(fileNameWithoutDotJson+"_MDD.json","w") as file:
+    with open(fileNameWithoutDotJson + SUFFIX_OF_MDD_DATA,"w") as file:
         json.dump(tmp, file, indent = 4)
 
 
 def processBatchFinalRtnAndDumpToJson(fileNameWithoutDotJson):
     
     tmp = dict()
-    datas = loadJson(fileNameWithoutDotJson+"_price.json")
+    datas = loadJson(fileNameWithoutDotJson + SUFFIX_OF_PRICED_DATA)
     
     for count, data in enumerate(datas):
         prices = datas[data]
       
         tmp[str(count)] = prices[-1] - prices[0]
 
-    with open(fileNameWithoutDotJson+"_FinalRtn.json","w") as file:
+    with open(fileNameWithoutDotJson + SUFFIX_OF_FINAL_RTN,"w") as file:
         json.dump(tmp, file, indent = 4)
 
 

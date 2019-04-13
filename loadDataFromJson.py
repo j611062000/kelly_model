@@ -1,5 +1,10 @@
 import json
 
+def loadJson(filename):
+    with open(filename, "r") as toBeSerialized:
+        serializedData = json.load(toBeSerialized)
+    return serializedData
+
 def loadAllDataFromJson(dataLabel, flagLabel, returnStyleLabel, filename):
     
     with open(filename, "r") as file:
