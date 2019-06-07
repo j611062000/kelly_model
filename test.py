@@ -1,4 +1,5 @@
 import json
+import time
 
 from loadDataFromJson import loadJson
 
@@ -39,6 +40,20 @@ def main():
         for f in range(1,101):
             tmp[str(f)] = MDD_test(f_wealth_test(data,f/100)[1])
         json.dump(tmp,file,indent=4)
+
+
+def trackProcessTime(func):
+    def wrapper(*args):
+        startTime = time.time()
+        func(*args)
+        endTime = time.time()
+        print("--- {} seconds ---".format(endTime - startTime))
+    
+    return wrapper
+
+
+
+
 
 if __name__ == "__main__":
     alpha = 0.2

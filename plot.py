@@ -5,28 +5,56 @@ from loadDataFromJson import loadJson
 
 import json
 
-COLOR_OF_DATA = "Blue"
+COLOR_OF_DATA = "Red"
 COLOR_OF_SUB_DATA = "Red"
 GRID_LINE_ALPHA = 0.3
 SIZE_OF_DOT = 4
 SUB_Y_AXIS_POSITION = "Right"
 
-def initializeVanilaDotGraph(desiredTitle, SIZE_OF_DOT, xLabel, yLabel, Xs, Ys, legenOfData):
+
+
+
+def generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, ifWithLine, colors):
 
     dotGraph = figure(title=desiredTitle)
     dotGraph.grid.grid_line_alpha = GRID_LINE_ALPHA
     dotGraph.xaxis.axis_label = xLabel
     dotGraph.yaxis.axis_label = yLabel
-    dotGraph.circle(Xs, Ys, color=COLOR_OF_DATA, legend=legenOfData, size = SIZE_OF_DOT)
-    
-    return dotGraph
 
-def plotDotGraphWithSubYAxis(dotGraph, Xs, mainYRange, subYRange, subYLabel, subYData, legendOfSubData):
+    print(dotGraph)
+
+    
+    if type(Ys) == list:
+        for y, legend_, color in zip(Ys,legenOfData, colors):
+            
+            dotGraph.circle(Xs, y, color=color, legend=legend_, size = SIZE_OF_DOT)
+            dotGraph.line(Xs, y, line_width=2, color = color)
+
+    else:
+        dotGraph.circle(Xs, Ys, color=COLOR_OF_DATA, legend=legenOfData, size = SIZE_OF_DOT)
+        if ifWithLine:
+            dotGraph.line(Xs, Ys, line_width=2, color = COLOR_OF_DATA)
+
+    show(dotGraph)
+
+def generateDotGraphWithSubYAxis(dotGraph, Xs, mainYRange, subYRange, subYLabel, subYData, legendOfSubData):
     
     dotGraph.y_range = Range1d(start=mainYRange[0], end=mainYRange[1])
     dotGraph.extra_y_ranges = {subYLabel: Range1d(start=subYRange[0], end=subYRange[1])}
     dotGraph.add_layout(LinearAxis(y_range_name = subYLabel, axis_label=subYLabel), SUB_Y_AXIS_POSITION)
     dotGraph.circle(Xs, subYData, color = COLOR_OF_SUB_DATA, legend=legendOfSubData, size = SIZE_OF_DOT, y_range_name=subYLabel)
+
+    return dotGraph
+
+def calAbsValue(dic, isAbs = 0):
+    tmp = list()
+    for key in dic:
+        if isAbs:
+            appendData = abs(dic[key])
+        else:
+            appendData = dic[key]
+        tmp.append(appendData)
+    return tmp
 
 # def f_MDD_HPR_single_asset(f, MDD,HPR):
 
@@ -48,34 +76,31 @@ def plotDotGraphWithSubYAxis(dotGraph, Xs, mainYRange, subYRange, subYLabel, sub
 
 #         return figure
 
+# def intervalBarGrap(intervalString, yDataxLabel, yLabel,desiredTitle, legenOfData, colorOfData):
+#     counts = [5, 3, 4, 2, 4, 6]
+#     p = figure(x_range=fruits, plot_height=250, title="Fruit Counts",
+#             toolbar_location=None, tools="")
+#     p.vbar(x=intervalString, top=counts, width=0.9)
+#     p.xgrid.grid_line_color = None
+#     p.y_range.start = 0
+
+#     show(p)
+
+#     return circleGraph
 
 
+# def plot(RTN, MDD, alpha, beta,T):
 
-def intervalBarGrap(intervalString, yDataxLabel, yLabel,desiredTitle, legenOfData, colorOfData):
-    counts = [5, 3, 4, 2, 4, 6]
-    p = figure(x_range=fruits, plot_height=250, title="Fruit Counts",
-            toolbar_location=None, tools="")
-    p.vbar(x=intervalString, top=counts, width=0.9)
-    p.xgrid.grid_line_color = None
-    p.y_range.start = 0
+#     p1 = figure(title="RTN x MDD, P(MDD<{}) = {}, Time_Period = {}, # of experiment = {}".format(abs(alpha), beta, T, 10000))
+#     p1.grid.grid_line_alpha=0.3
+#     p1.xaxis.axis_label = 'RTN'
+#     p1.yaxis.axis_label = 'MDD'
+#     # p1.line(RTN,MDD, color='#A6CEE3', legend='Accu_Rtn')
+#     p1.circle(RTN,MDD, color='#A6CEE3', legend='MDD', size = 4)
+#     hline = Span(location=-0.3, dimension='width', line_color='green', line_width=3)
+#     p1.renderers.extend([hline])
 
-    show(p)
-
-    return circleGraph
-
-
-def plot(RTN, MDD, alpha, beta,T):
-
-    p1 = figure(title="RTN x MDD, P(MDD<{}) = {}, Time_Period = {}, # of experiment = {}".format(abs(alpha), beta, T, 10000))
-    p1.grid.grid_line_alpha=0.3
-    p1.xaxis.axis_label = 'RTN'
-    p1.yaxis.axis_label = 'MDD'
-    # p1.line(RTN,MDD, color='#A6CEE3', legend='Accu_Rtn')
-    p1.circle(RTN,MDD, color='#A6CEE3', legend='MDD', size = 4)
-    hline = Span(location=-0.3, dimension='width', line_color='green', line_width=3)
-    p1.renderers.extend([hline])
-
-    return p1
+#     return p1
 
 def main():
     
@@ -118,22 +143,13 @@ if __name__ == '__main__':
     #     for f in data:
     #         HPR.append(data[f])
     # f_MDD_HPR_single_asset(fraction, MDD,HPR)
-    def purify(dic, ifabs = 0):
-        tmp = list()
-        for key in dic:
-            if ifabs:
-                appendData = abs(dic[key])
-            else:
-                appendData = dic[key]
-            tmp.append(appendData)
-        return tmp
+    
 
-    Xs = purify(loadJson("./data/0050/0050_simulated_return_MDD.json"),1)
-    Ys = purify(loadJson("./data/0050/0050_simulated_return_FinalRtn.json"))
-    xLabel = "MDD"
+    Ys = loadJson("./data/0050/backTesting/0050_Return_Path_price.json")["0"]
+    Xs = [i for i in range(len(Ys))]
+    xLabel = "Time"
     yLabel = "RTN"
-    desiredTitle = "MDD x RTN"
-    legenOfData = "MDD x RTN"
-    colorOfData = "Red"
-    p = plotCircleGraph(Xs, Ys, xLabel, yLabel, desiredTitle, legenOfData, colorOfData)
+    desiredTitle = yLabel+" x "+xLabel
+    legenOfData = yLabel
+    p = generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 1)
     show(p)

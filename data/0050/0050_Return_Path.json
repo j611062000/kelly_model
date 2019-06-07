@@ -1,6 +1,10 @@
 {
     
-    "metaData":"ascending by timestamp",
+    "metadata": {
+        "flag":0,
+        "underlying": "0050.tw",
+        "returnStyle":1
+    },
     "data": [
         0,
         -0.021969080553295384,

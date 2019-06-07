@@ -1,7 +1,9 @@
+import numpy
 import json
 import matplotlib.pyplot as plt
 import time
 
+from batchProcess import MDD
 from collections import defaultdict
 from loadDataFromJson import loadAllDataFromJson
 from matplotlib.ticker import PercentFormatter
@@ -9,61 +11,72 @@ from multiprocessing import Pool
 from numpy.random import choice
 
 
-def MDD(prices, maxDrawdown=0):
-    """
-    data: a list stores the wealth(i), i=1~n
-    definition of MDD: (price-high)/high
-    """
-    high = prices[0]
-    for price in prices:
-        if price == 0:
-            # you lose all wealth when second round (=prices[0])
-            return -1
+# TODO expected value
 
-        elif high > price:
-            maxDrawdown = min(maxDrawdown, (price - high) / high)
-
-        else:
-            high = price
-
-    return maxDrawdown
-
-
-
-def simulation_of_f(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expected_wealth):
+def calProbBelowAlphaOfEachF(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expected_wealth,increment):
     """
     Input: simulation of return with specified time periods, and parameters of f
     Output: An individual simulation with f from 0.00~1.00
 
     """
     simulation_f = defaultdict(list)
+    # numpy
+    # wealthPath = numpy.zeros((timePeriod, numberOfExperiment))
+    # numpy
 
-    # accumulation of wealth given specified f
     for f in f_range:
+        
+        
+        
         init_wealth = 1
+
+        # numpy 
+        # def calWealth(rtn):
+        #     return 1+f*rtn
+        # init_wealth = numpy.ones((1, numberOfExperiment))
+        # numpy 
+
         for outcome in simulation_path:
-            init_wealth = init_wealth * (1 - f) + init_wealth * f * (1+outcome)
+            # init_wealth = init_wealth * (1 - f) + init_wealth * f * (1+outcome)
+            init_wealth = init_wealth*(1+f*outcome)
             simulation_f[f].append(init_wealth)
 
-        f_expected_wealth[f] += init_wealth
+            # numpy 
+            # init_wealth = numpy.append(init_wealth, init_wealth[-1]*calWealth(outcome),axis=0)
+            # numpy
 
-    # counting the number of f which is below the alpha
-    increment = 1/numberOfExperiment
+        f_expected_wealth[f] += init_wealth
 
     for f in f_range:
         if abs(MDD(simulation_f[f])) < alpha:
             f_MDD_below_alpha[f] += increment
+    
+    return f_MDD_below_alpha, f_expected_wealth
 
-def f_star(experiments, f_range, numberOfExperiment, timePeriod, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
+def batchCalProbBelowAlphaOfEachF(experiments, f_range, numberOfExperiment, timePeriod, alpha, beta, f_MDD_below_alpha, f_expected_wealth):
 
-    for index in range(0, len(experiments)):
-        simulation_of_f(experiments[index], 
+    increment = 1/numberOfExperiment
+    # # [[Exp1(1)...ExpN(1)],...,[Exp1(K)...ExpN(K)]]
+    # transposeAry = numpy.transpose(numpy.array(experiments))
+
+    # calProbBelowAlphaOfEachF(transposeAry, 
+    #                 alpha,
+    #                 f_range, 
+    #                 f_MDD_below_alpha, 
+    #                 f_expected_wealth,
+    #                 increment,
+    #                 numberOfExperiment, 
+    #                 timePeriod)
+
+    for experiment in experiments:
+        calProbBelowAlphaOfEachF(experiment, 
                         alpha,
                         f_range, 
                         f_MDD_below_alpha, 
-                        f_expected_wealth)
+                        f_expected_wealth,
+                        increment)
         
-
+    return f_MDD_below_alpha, f_expected_wealth
 
 def data_to_graph(f_range, numberOfExperiment, beta, alpha, f_MDD_below_alpha, f_expected_wealth, prob=0):
 
@@ -102,23 +115,17 @@ def plot_info(timePeriod, numberOfExperiment, plt):
 
 if __name__ == '__main__':
 
-    start_time = time.time()
-
     dataLabel = "data"
     flagLabel = "flag"
     returnStyleLabel = "returnStyle"
-
     beta  =  0.1
     alpha = [x / 100 for x in range(0, 100, 10)]
-    f_range = [0.624]
-    # f_range = [x / 100 for x in range(0, 101, 1)]
-    
+    # f_range = [0.624]
+    f_range = [x / 100 for x in range(0, 101, 1)]
     filename = "./data/0050/0050_simulated_return.json"
-    
     onlyLoadData = 1
+    experiments ,timePeriod, numberOfExperiment, returnStyle, flag = loadAllDataFromJson(filename)
 
-    argsForLoadDataFromJson = [dataLabel, flagLabel, returnStyleLabel, filename]
-    experiments ,timePeriod, numberOfExperiment, returnStyle, flag = loadAllDataFromJson(*argsForLoadDataFromJson)
 
     if not onlyLoadData:
 
@@ -126,7 +133,7 @@ if __name__ == '__main__':
             f_expected_wealth = defaultdict(lambda: 0)
             f_MDD_below_alpha = defaultdict(lambda: 0)
 
-            f_star(
+            batchCalProbBelowAlphaOfEachF(
                 experiments,
                 f_range,
                 numberOfExperiment,
@@ -147,7 +154,6 @@ if __name__ == '__main__':
             )
 
         # optimal_f_to_graph(alpha_optimal_f)
-        print("--- %s seconds ---" % (time.time() - start_time))
         
         plot_info(
             timePeriod,

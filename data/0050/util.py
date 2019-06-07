@@ -2,6 +2,9 @@ import json
 
 
 def HPR():
+    """
+    Reference: Prof. Wu's blog
+    """
     geoMean = dict()
     with open("0050_Return_Path.json", "r") as file:
         returns = json.load(file)["Return Path"]
