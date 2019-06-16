@@ -14,26 +14,12 @@ SUB_Y_AXIS_POSITION = "Right"
 
 
 
-def generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, ifWithLine, colors):
+def generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, ifWithLine, colors = COLOR_OF_DATA):
 
-    dotGraph = figure(title=desiredTitle)
-    dotGraph.grid.grid_line_alpha = GRID_LINE_ALPHA
-    dotGraph.xaxis.axis_label = xLabel
-    dotGraph.yaxis.axis_label = yLabel
+    dotGraph = figure(title=desiredTitle, x_axis_label = xLabel, y_axis_label = yLabel)
 
-    print(dotGraph)
-
-    
-    if type(Ys) == list:
-        for y, legend_, color in zip(Ys,legenOfData, colors):
-            
-            dotGraph.circle(Xs, y, color=color, legend=legend_, size = SIZE_OF_DOT)
-            dotGraph.line(Xs, y, line_width=2, color = color)
-
-    else:
-        dotGraph.circle(Xs, Ys, color=COLOR_OF_DATA, legend=legenOfData, size = SIZE_OF_DOT)
-        if ifWithLine:
-            dotGraph.line(Xs, Ys, line_width=2, color = COLOR_OF_DATA)
+    assert(len(Xs) == len(Ys))
+    dotGraph.circle(Xs, Ys, fill_color=COLOR_OF_DATA, legend=legenOfData, size = SIZE_OF_DOT)
 
     show(dotGraph)
 
@@ -102,30 +88,30 @@ def calAbsValue(dic, isAbs = 0):
 
 #     return p1
 
-def main():
+# def main():
     
-    tmp = list()
-    T = 30
-    file_name = "10000_T"+str(T)
-    with open("./data/"+file_name+"_experiment_MDD.json", "r") as MDD:
-        MDD_data = json.load(MDD)
+#     tmp = list()
+#     T = 30
+#     file_name = "10000_T"+str(T)
+#     with open("./data/"+file_name+"_experiment_MDD.json", "r") as MDD:
+#         MDD_data = json.load(MDD)
 
-    with open("./data/"+file_name+"_experiment_finalRtn.json","r") as finalRtn:
-        finalRtn_data = json.load(finalRtn)
-    for x in range(len(MDD_data)):
-        tmp.append((finalRtn_data[str(x)], MDD_data[str(x)]))
-    tmp.sort(key = lambda x:x[0] ) 
-    X = [x[0] for x in tmp]
-    Y = [x[1] for x in tmp]
+#     with open("./data/"+file_name+"_experiment_finalRtn.json","r") as finalRtn:
+#         finalRtn_data = json.load(finalRtn)
+#     for x in range(len(MDD_data)):
+#         tmp.append((finalRtn_data[str(x)], MDD_data[str(x)]))
+#     tmp.sort(key = lambda x:x[0] ) 
+#     X = [x[0] for x in tmp]
+#     Y = [x[1] for x in tmp]
     
-    c = 0
-    alpha = -0.3
-    for mdd in Y:
-        if mdd>alpha:
-            c+=1
-    p = plot(X,Y,alpha, c/10000, T)
-    show(p)
-    # print(c)
+#     c = 0
+#     alpha = -0.3
+#     for mdd in Y:
+#         if mdd>alpha:
+#             c+=1
+#     p = plot(X,Y,alpha, c/10000, T)
+#     show(p)
+#     # print(c)
 
 
 if __name__ == '__main__':
@@ -144,12 +130,16 @@ if __name__ == '__main__':
     #         HPR.append(data[f])
     # f_MDD_HPR_single_asset(fraction, MDD,HPR)
     
-
-    Ys = loadJson("./data/0050/backTesting/0050_Return_Path_price.json")["0"]
-    Xs = [i for i in range(len(Ys))]
-    xLabel = "Time"
-    yLabel = "RTN"
+    with open("./data/0050/backTesting/0050_yearly_fraction_MDD.json", "r") as file:
+        data = json.load(file)
+        tmp = list()
+        for i in range(0,100):
+            tmp.append(data[str(i)])
+        
+    Ys = tmp
+    Xs = [x/100 for x in range(0,100)]
+    xLabel = "Fraction"
+    yLabel = "MDD"
     desiredTitle = yLabel+" x "+xLabel
     legenOfData = yLabel
-    p = generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 1)
-    show(p)
+    generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 0)

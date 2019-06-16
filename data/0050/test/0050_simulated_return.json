@@ -1,0 +1,31 @@
+{
+    "metadata": {
+        "underlying": "0050.tw",
+        "numberOfExperiments": 10000,
+        "lengthOfEachExperiment": 250,
+        "flag":2,
+        "returnStyle":1,
+        "isTest":1
+        "testConfig":{
+            "f":0.9,
+            "initWealth":1
+        }
+    },
+    "data": [
+        [
+            -0.019230769230769197,
+            0.0011827321111769194
+          
+        ],
+        [
+            0.005625000000000035,
+            -0.0027118644067796994
+           
+        ]
+    ]
+
+    "result":[
+        [0.9826923077, 0.9837383433],
+        [1.0050625,1.002609466]
+    ]
+}

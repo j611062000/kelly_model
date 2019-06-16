@@ -1,6 +1,8 @@
 import json
 import time
 
+# from batchProcess import convetStringToDate
+from datetime import date
 from loadDataFromJson import loadJson
 
 def f_wealth_test(datas, f):
@@ -51,15 +53,19 @@ def trackProcessTime(func):
     
     return wrapper
 
-
-
-
-
+def convetStringToDateTest(convetStringToDate):
+    stringDates = ["2019-01-13","2018-12-31"]
+    correctResults = [date(2019,1,13), date(2018,12,31)]
+    for stringDate in stringDates:
+        print(convetStringToDate(stringDate))
+        
 if __name__ == "__main__":
-    alpha = 0.2
-    count = 0
-    datas = loadJson("./data/0050/0050_simulated_return_MDD.json")
-    for data in datas.values():
-        if data > -alpha:
-            count+=1
-    print(count)
+    # alpha = 0.2
+    # count = 0
+    # datas = loadJson("./data/0050/0050_simulated_return_MDD.json")
+    # for data in datas.values():
+    #     if data > -alpha:
+    #         count+=1
+    # print(count)
+
+    convetStringToDateTest(convetStringToDate)

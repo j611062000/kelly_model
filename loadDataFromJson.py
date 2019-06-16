@@ -18,8 +18,10 @@ def getAllFilesName(path, exceptionOfFiles = list()):
 
 
 def loadJson(filename):
+   
     with open(filename, "r") as toBeSerialized:
         serializedData = json.load(toBeSerialized)
+   
     return serializedData
 
 

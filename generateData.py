@@ -1,14 +1,23 @@
 import json
 
+from batchProcess import *
 from configuration import *
 from datetime import datetime
+from loadDataFromJson import loadJson
 from numpy.random import normal, randint
 
 
 
-def dumpUniformDistribution(numberOfSampling, sourceFileName, numberOfExperiments, dataFromMemory = False, targetFileName = False):
+def dumpUniformDistribution(numberOfSampling, sourceFileName, numberOfExperiments,  targetFileName = False, dataFromMemory = False):
 
-    dataToBeSerialized = createHeader(flag = 2, returnStyle = 1, underlying = "0050.tw")
+    deserializedData  = loadJson(sourceFileName)
+    pathForUnderlying = ["metadata","underlying"]
+    pathForTimeRange  = ['metadata','timeRange']
+    underlying = findValueInDictByKeyName(pathForUnderlying, deserializedData)
+    dataRange  = findValueInDictByKeyName(pathForTimeRange, deserializedData)
+    print(dataRange)
+
+    dataToBeSerialized = createHeaderOfTemplateForJson(flag = 2, returnStyle = 1, underlying = underlying, dataRange=dataRange,lengthOfEachExperiment = numberOfSampling, numberOfExperiments = numberOfExperiments)
 
     if not dataFromMemory:
         with open(sourceFileName, "r") as fileOfData:
@@ -26,13 +35,8 @@ def dumpUniformDistribution(numberOfSampling, sourceFileName, numberOfExperiment
 
         dataToBeSerialized["data"].append(pathOfReturn)
     
-    if not targetFileName:
-        with open("0050_simulated_return.json","w") as targetFile:
-            json.dump(dataToBeSerialized, targetFile, indent = 4)
-   
-    elif targetFileName:
-        with open(targetFileName,"w") as targetFile:
-            json.dump(dataToBeSerialized, targetFile, indent = 4)
+    with open(targetFileName,"w") as targetFile:
+        json.dump(dataToBeSerialized, targetFile, indent = 4)
 
 def dumpNormalDistribution(mean, std, num_of_exp,file_name, time):
     data = dict()
@@ -62,7 +66,11 @@ if __name__ == "__main__":
     # time = 30
     # file_name = "./data/normal_dist_"+str(num_of_exp)+"exps"
     # dumpNormalDistribution(mean, std, num_of_exp, file_name, time)
-    dumpUniformDistribution(
-        numberOfSampling = 250, 
-        sourceFileName = "./data/0050/0050_Return_Path.json",
-        numberOfExperiments = 10000)
+    tickers = ["1301", "1303", "1326", "2317", "2330", "2412", "2454", "2882", "3008", "6505"]
+
+    for ticker in tickers:
+        dumpUniformDistribution(
+            numberOfSampling = 250, 
+            sourceFileName = "./data/"+ticker+"/rtn.json",
+            numberOfExperiments = 10000,
+            targetFileName="./data/"+ticker+"/simulated_rtn.json")
