@@ -14,8 +14,10 @@ from multiprocessing import Pool
 from numpy.random import choice
 
 
-
-# TODO expected value
+"""
+TODO: download top 100 stocks --> simulation data --> "data visualization"
+      --> introduction --> prerequisites
+"""
 
 def calProbBelowAlphaOfEachF(simulation_path, alpha, f_range, f_MDD_below_alpha, f_expected_wealth,increment, numOfExp):
    

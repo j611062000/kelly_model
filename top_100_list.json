@@ -1,0 +1,604 @@
+{
+    "date": "2019/6/27",
+    "description": "top 100 stock by market share",
+    "1": {
+        "ticker": "2330",
+        "market_share": "6,236,256",
+        "percentage_of_market": "19.15%",
+        "accum_percentage": "19.15%"
+    },
+    "2": {
+        "ticker": "2317",
+        "market_share": "1,072,995",
+        "percentage_of_market": "3.29%",
+        "accum_percentage": "22.44%"
+    },
+    "3": {
+        "ticker": "6505",
+        "market_share": "1,062,144",
+        "percentage_of_market": "3.26%",
+        "accum_percentage": "25.70%"
+    },
+    "4": {
+        "ticker": "2412",
+        "market_share": "880,470",
+        "percentage_of_market": "2.70%",
+        "accum_percentage": "28.40%"
+    },
+    "5": {
+        "ticker": "1301",
+        "market_share": "728,877",
+        "percentage_of_market": "2.24%",
+        "accum_percentage": "30.64%"
+    },
+    "6": {
+        "ticker": "1303",
+        "market_share": "623,363",
+        "percentage_of_market": "1.91%",
+        "accum_percentage": "32.55%"
+    },
+    "7": {
+        "ticker": "1326",
+        "market_share": "609,563",
+        "percentage_of_market": "1.87%",
+        "accum_percentage": "34.42%"
+    },
+    "8": {
+        "ticker": "2882",
+        "market_share": "542,731",
+        "percentage_of_market": "1.67%",
+        "accum_percentage": "36.09%"
+    },
+    "9": {
+        "ticker": "3008",
+        "market_share": "521,134",
+        "percentage_of_market": "1.60%",
+        "accum_percentage": "37.69%"
+    },
+    "10": {
+        "ticker": "2454",
+        "market_share": "496,899",
+        "percentage_of_market": "1.53%",
+        "accum_percentage": "39.22%"
+    },
+    "11": {
+        "ticker": "2881",
+        "market_share": "468,699",
+        "percentage_of_market": "1.44%",
+        "accum_percentage": "40.66%"
+    },
+    "12": {
+        "ticker": "1216",
+        "market_share": "465,925",
+        "percentage_of_market": "1.43%",
+        "accum_percentage": "42.09%"
+    },
+    "13": {
+        "ticker": "3045",
+        "market_share": "420,607",
+        "percentage_of_market": "1.29%",
+        "accum_percentage": "43.38%"
+    },
+    "14": {
+        "ticker": "2886",
+        "market_share": "419,555",
+        "percentage_of_market": "1.29%",
+        "accum_percentage": "44.67%"
+    },
+    "15": {
+        "ticker": "2891",
+        "market_share": "418,210",
+        "percentage_of_market": "1.28%",
+        "accum_percentage": "45.95%"
+    },
+    "16": {
+        "ticker": "2308",
+        "market_share": "405,217",
+        "percentage_of_market": "1.24%",
+        "accum_percentage": "47.19%"
+    },
+    "17": {
+        "ticker": "2002",
+        "market_share": "391,798",
+        "percentage_of_market": "1.20%",
+        "accum_percentage": "48.39%"
+    },
+    "18": {
+        "ticker": "2912",
+        "market_share": "313,446",
+        "percentage_of_market": "0.96%",
+        "accum_percentage": "49.35%"
+    },
+    "19": {
+        "ticker": "2884",
+        "market_share": "285,342",
+        "percentage_of_market": "0.88%",
+        "accum_percentage": "50.23%"
+    },
+    "20": {
+        "ticker": "2207",
+        "market_share": "280,736",
+        "percentage_of_market": "0.86%",
+        "accum_percentage": "51.09%"
+    },
+    "21": {
+        "ticker": "2892",
+        "market_share": "280,702",
+        "percentage_of_market": "0.86%",
+        "accum_percentage": "51.95%"
+    },
+    "22": {
+        "ticker": "3711",
+        "market_share": "271,461",
+        "percentage_of_market": "0.83%",
+        "accum_percentage": "52.78%"
+    },
+    "23": {
+        "ticker": "5880",
+        "market_share": "262,688",
+        "percentage_of_market": "0.81%",
+        "accum_percentage": "53.59%"
+    },
+    "24": {
+        "ticker": "4904",
+        "market_share": "256,444",
+        "percentage_of_market": "0.79%",
+        "accum_percentage": "54.38%"
+    },
+    "25": {
+        "ticker": "2880",
+        "market_share": "242,416",
+        "percentage_of_market": "0.74%",
+        "accum_percentage": "55.12%"
+    },
+    "26": {
+        "ticker": "5876",
+        "market_share": "236,662",
+        "percentage_of_market": "0.73%",
+        "accum_percentage": "55.85%"
+    },
+    "27": {
+        "ticker": "2382",
+        "market_share": "236,393",
+        "percentage_of_market": "0.73%",
+        "accum_percentage": "56.58%"
+    },
+    "28": {
+        "ticker": "1101",
+        "market_share": "234,715",
+        "percentage_of_market": "0.72%",
+        "accum_percentage": "57.30%"
+    },
+    "29": {
+        "ticker": "2885",
+        "market_share": "220,285",
+        "percentage_of_market": "0.68%",
+        "accum_percentage": "57.98%"
+    },
+    "30": {
+        "ticker": "2801",
+        "market_share": "206,559",
+        "percentage_of_market": "0.63%",
+        "accum_percentage": "58.61%"
+    },
+    "31": {
+        "ticker": "2408",
+        "market_share": "195,730",
+        "percentage_of_market": "0.60%",
+        "accum_percentage": "59.21%"
+    },
+    "32": {
+        "ticker": "2395",
+        "market_share": "185,954",
+        "percentage_of_market": "0.57%",
+        "accum_percentage": "59.78%"
+    },
+    "33": {
+        "ticker": "1402",
+        "market_share": "181,730",
+        "percentage_of_market": "0.56%",
+        "accum_percentage": "60.34%"
+    },
+    "34": {
+        "ticker": "2474",
+        "market_share": "171,797",
+        "percentage_of_market": "0.53%",
+        "accum_percentage": "60.87%"
+    },
+    "35": {
+        "ticker": "2303",
+        "market_share": "169,740",
+        "percentage_of_market": "0.52%",
+        "accum_percentage": "61.39%"
+    },
+    "36": {
+        "ticker": "2357",
+        "market_share": "167,492",
+        "percentage_of_market": "0.51%",
+        "accum_percentage": "61.90%"
+    },
+    "37": {
+        "ticker": "5871",
+        "market_share": "166,347",
+        "percentage_of_market": "0.51%",
+        "accum_percentage": "62.41%"
+    },
+    "38": {
+        "ticker": "1102",
+        "market_share": "164,375",
+        "percentage_of_market": "0.50%",
+        "accum_percentage": "62.91%"
+    },
+    "39": {
+        "ticker": "9910",
+        "market_share": "163,645",
+        "percentage_of_market": "0.50%",
+        "accum_percentage": "63.41%"
+    },
+    "40": {
+        "ticker": "2887",
+        "market_share": "149,267",
+        "percentage_of_market": "0.46%",
+        "accum_percentage": "63.87%"
+    },
+    "41": {
+        "ticker": "2890",
+        "market_share": "146,524",
+        "percentage_of_market": "0.45%",
+        "accum_percentage": "64.32%"
+    },
+    "42": {
+        "ticker": "2883",
+        "market_share": "142,152",
+        "percentage_of_market": "0.44%",
+        "accum_percentage": "64.76%"
+    },
+    "43": {
+        "ticker": "4938",
+        "market_share": "141,809",
+        "percentage_of_market": "0.44%",
+        "accum_percentage": "65.20%"
+    },
+    "44": {
+        "ticker": "2105",
+        "market_share": "131,926",
+        "percentage_of_market": "0.41%",
+        "accum_percentage": "65.61%"
+    },
+    "45": {
+        "ticker": "2379",
+        "market_share": "121,435",
+        "percentage_of_market": "0.37%",
+        "accum_percentage": "65.98%"
+    },
+    "46": {
+        "ticker": "2633",
+        "market_share": "121,427",
+        "percentage_of_market": "0.37%",
+        "accum_percentage": "66.35%"
+    },
+    "47": {
+        "ticker": "9904",
+        "market_share": "114,925",
+        "percentage_of_market": "0.35%",
+        "accum_percentage": "66.70%"
+    },
+    "48": {
+        "ticker": "2888",
+        "market_share": "114,512",
+        "percentage_of_market": "0.35%",
+        "accum_percentage": "67.05%"
+    },
+    "49": {
+        "ticker": "2327",
+        "market_share": "114,255",
+        "percentage_of_market": "0.35%",
+        "accum_percentage": "67.40%"
+    },
+    "50": {
+        "ticker": "2823",
+        "market_share": "109,581",
+        "percentage_of_market": "0.34%",
+        "accum_percentage": "67.74%"
+    },
+    "51": {
+        "ticker": "1476",
+        "market_share": "109,198",
+        "percentage_of_market": "0.34%",
+        "accum_percentage": "68.08%"
+    },
+    "52": {
+        "ticker": "2301",
+        "market_share": "106,494",
+        "percentage_of_market": "0.33%",
+        "accum_percentage": "68.41%"
+    },
+    "53": {
+        "ticker": "3034",
+        "market_share": "103,143",
+        "percentage_of_market": "0.32%",
+        "accum_percentage": "68.73%"
+    },
+    "54": {
+        "ticker": "9921",
+        "market_share": "92,641",
+        "percentage_of_market": "0.28%",
+        "accum_percentage": "69.01%"
+    },
+    "55": {
+        "ticker": "2409",
+        "market_share": "90,853",
+        "percentage_of_market": "0.28%",
+        "accum_percentage": "69.29%"
+    },
+    "56": {
+        "ticker": "2356",
+        "market_share": "89,687",
+        "percentage_of_market": "0.28%",
+        "accum_percentage": "69.57%"
+    },
+    "57": {
+        "ticker": "2354",
+        "market_share": "89,678",
+        "percentage_of_market": "0.28%",
+        "accum_percentage": "69.85%"
+    },
+    "58": {
+        "ticker": "2324",
+        "market_share": "89,245",
+        "percentage_of_market": "0.27%",
+        "accum_percentage": "70.12%"
+    },
+    "59": {
+        "ticker": "2834",
+        "market_share": "87,596",
+        "percentage_of_market": "0.27%",
+        "accum_percentage": "70.39%"
+    },
+    "60": {
+        "ticker": "2227",
+        "market_share": "83,250",
+        "percentage_of_market": "0.26%",
+        "accum_percentage": "70.65%"
+    },
+    "61": {
+        "ticker": "4958",
+        "market_share": "81,682",
+        "percentage_of_market": "0.25%",
+        "accum_percentage": "70.90%"
+    },
+    "62": {
+        "ticker": "2492",
+        "market_share": "79,671",
+        "percentage_of_market": "0.24%",
+        "accum_percentage": "71.14%"
+    },
+    "63": {
+        "ticker": "2049",
+        "market_share": "78,447",
+        "percentage_of_market": "0.24%",
+        "accum_percentage": "71.38%"
+    },
+    "64": {
+        "ticker": "2377",
+        "market_share": "73,502",
+        "percentage_of_market": "0.23%",
+        "accum_percentage": "71.61%"
+    },
+    "65": {
+        "ticker": "3481",
+        "market_share": "73,048",
+        "percentage_of_market": "0.22%",
+        "accum_percentage": "71.83%"
+    },
+    "66": {
+        "ticker": "2345",
+        "market_share": "71,663",
+        "percentage_of_market": "0.22%",
+        "accum_percentage": "72.05%"
+    },
+    "67": {
+        "ticker": "2618",
+        "market_share": "70,232",
+        "percentage_of_market": "0.22%",
+        "accum_percentage": "72.27%"
+    },
+    "68": {
+        "ticker": "3231",
+        "market_share": "69,064",
+        "percentage_of_market": "0.21%",
+        "accum_percentage": "72.48%"
+    },
+    "69": {
+        "ticker": "8464",
+        "market_share": "68,860",
+        "percentage_of_market": "0.21%",
+        "accum_percentage": "72.69%"
+    },
+    "70": {
+        "ticker": "3702",
+        "market_share": "67,918",
+        "percentage_of_market": "0.21%",
+        "accum_percentage": "72.90%"
+    },
+    "71": {
+        "ticker": "1434",
+        "market_share": "66,965",
+        "percentage_of_market": "0.21%",
+        "accum_percentage": "73.11%"
+    },
+    "72": {
+        "ticker": "2347",
+        "market_share": "65,300",
+        "percentage_of_market": "0.20%",
+        "accum_percentage": "73.31%"
+    },
+    "73": {
+        "ticker": "1590",
+        "market_share": "62,945",
+        "percentage_of_market": "0.19%",
+        "accum_percentage": "73.50%"
+    },
+    "74": {
+        "ticker": "6669",
+        "market_share": "61,701",
+        "percentage_of_market": "0.19%",
+        "accum_percentage": "73.69%"
+    },
+    "75": {
+        "ticker": "2344",
+        "market_share": "60,297",
+        "percentage_of_market": "0.19%",
+        "accum_percentage": "73.88%"
+    },
+    "76": {
+        "ticker": "2353",
+        "market_share": "60,269",
+        "percentage_of_market": "0.19%",
+        "accum_percentage": "74.07%"
+    },
+    "77": {
+        "ticker": "6239",
+        "market_share": "59,371",
+        "percentage_of_market": "0.18%",
+        "accum_percentage": "74.25%"
+    },
+    "78": {
+        "ticker": "2360",
+        "market_share": "58,435",
+        "percentage_of_market": "0.18%",
+        "accum_percentage": "74.43%"
+    },
+    "79": {
+        "ticker": "2542",
+        "market_share": "58,040",
+        "percentage_of_market": "0.18%",
+        "accum_percentage": "74.61%"
+    },
+    "80": {
+        "ticker": "3044",
+        "market_share": "57,554",
+        "percentage_of_market": "0.18%",
+        "accum_percentage": "74.79%"
+    },
+    "81": {
+        "ticker": "2603",
+        "market_share": "57,089",
+        "percentage_of_market": "0.18%",
+        "accum_percentage": "74.97%"
+    },
+    "82": {
+        "ticker": "2027",
+        "market_share": "56,693",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.14%"
+    },
+    "83": {
+        "ticker": "1227",
+        "market_share": "56,644",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.31%"
+    },
+    "84": {
+        "ticker": "2385",
+        "market_share": "56,630",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.48%"
+    },
+    "85": {
+        "ticker": "6415",
+        "market_share": "54,996",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.65%"
+    },
+    "86": {
+        "ticker": "9914",
+        "market_share": "54,714",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.82%"
+    },
+    "87": {
+        "ticker": "2610",
+        "market_share": "53,993",
+        "percentage_of_market": "0.17%",
+        "accum_percentage": "75.99%"
+    },
+    "88": {
+        "ticker": "3037",
+        "market_share": "53,421",
+        "percentage_of_market": "0.16%",
+        "accum_percentage": "76.15%"
+    },
+    "89": {
+        "ticker": "6409",
+        "market_share": "50,516",
+        "percentage_of_market": "0.16%",
+        "accum_percentage": "76.31%"
+    },
+    "90": {
+        "ticker": "1605",
+        "market_share": "49,225",
+        "percentage_of_market": "0.15%",
+        "accum_percentage": "76.46%"
+    },
+    "91": {
+        "ticker": "6176",
+        "market_share": "48,595",
+        "percentage_of_market": "0.15%",
+        "accum_percentage": "76.61%"
+    },
+    "92": {
+        "ticker": "2923",
+        "market_share": "48,467",
+        "percentage_of_market": "0.15%",
+        "accum_percentage": "76.76%"
+    },
+    "93": {
+        "ticker": "3532",
+        "market_share": "47,124",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "76.90%"
+    },
+    "94": {
+        "ticker": "1722",
+        "market_share": "46,893",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.04%"
+    },
+    "95": {
+        "ticker": "1504",
+        "market_share": "45,561",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.18%"
+    },
+    "96": {
+        "ticker": "9945",
+        "market_share": "44,946",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.32%"
+    },
+    "97": {
+        "ticker": "1477",
+        "market_share": "44,285",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.46%"
+    },
+    "98": {
+        "ticker": "2371",
+        "market_share": "44,217",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.60%"
+    },
+    "99": {
+        "ticker": "2812",
+        "market_share": "44,069",
+        "percentage_of_market": "0.14%",
+        "accum_percentage": "77.74%"
+    },
+    "100": {
+        "ticker": "2915",
+        "market_share": "43,155",
+        "percentage_of_market": "0.13%",
+        "accum_percentage": "77.87%"
+    }
+}

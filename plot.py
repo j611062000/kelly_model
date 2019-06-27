@@ -1,16 +1,20 @@
 from bokeh.plotting import figure, output_file, show
 from bokeh.layouts import gridplot
 from bokeh.models import Span, Range1d, LinearAxis
+from configuration import Plot
 from loadDataFromJson import loadJson
 
 import json
 
-COLOR_OF_DATA = "Red"
+COLOR_OF_DATA = "Blue"
 COLOR_OF_SUB_DATA = "Red"
 GRID_LINE_ALPHA = 0.3
 SIZE_OF_DOT = 4
 SUB_Y_AXIS_POSITION = "Right"
 
+def setStyle(graph):
+    # graph.xaxis.axis_label_text_font_size = 40
+    return graph
 
 
 
@@ -20,7 +24,7 @@ def generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, if
 
     assert(len(Xs) == len(Ys))
     dotGraph.circle(Xs, Ys, fill_color=COLOR_OF_DATA, legend=legenOfData, size = SIZE_OF_DOT)
-
+    setStyle(dotGraph)
     show(dotGraph)
 
 def generateDotGraphWithSubYAxis(dotGraph, Xs, mainYRange, subYRange, subYLabel, subYData, legendOfSubData):
@@ -29,6 +33,7 @@ def generateDotGraphWithSubYAxis(dotGraph, Xs, mainYRange, subYRange, subYLabel,
     dotGraph.extra_y_ranges = {subYLabel: Range1d(start=subYRange[0], end=subYRange[1])}
     dotGraph.add_layout(LinearAxis(y_range_name = subYLabel, axis_label=subYLabel), SUB_Y_AXIS_POSITION)
     dotGraph.circle(Xs, subYData, color = COLOR_OF_SUB_DATA, legend=legendOfSubData, size = SIZE_OF_DOT, y_range_name=subYLabel)
+    setStyle(dotGraph)
 
     return dotGraph
 
@@ -115,31 +120,42 @@ def calAbsValue(dic, isAbs = 0):
 
 
 if __name__ == '__main__':
-    # main()
-    # fraction = list()
-    # HPR = list()
-    # MDD = list()
-    # with open("./data/0050/0050_f_With_MDD.json", "r") as file:
-    #     data = json.load(file)
-    #     for f in data:
-    #         fraction.append(float(f)/100)
-    #         MDD.append(data[f])
-    # with open("./data/0050/0050_HPR_and_f.json", "r") as file:
-    #     data = json.load(file)
-    #     for f in data:
-    #         HPR.append(data[f])
-    # f_MDD_HPR_single_asset(fraction, MDD,HPR)
     
-    with open("./data/0050/backTesting/0050_yearly_fraction_MDD.json", "r") as file:
-        data = json.load(file)
-        tmp = list()
-        for i in range(0,100):
-            tmp.append(data[str(i)])
-        
-    Ys = tmp
-    Xs = [x/100 for x in range(0,100)]
-    xLabel = "Fraction"
-    yLabel = "MDD"
+    # Alpha Vintage to Ticker simulation
+    # tickers = ["1301", "1303", "1326", "2317", "2330", "2412", "2454", "2882", "3008", "6505"]
+    # # tickers = ["1301"]
+    # for ticker in tickers:
+    #     with open("./data/"+ticker+"/each_fraction_MDD.json", "r") as file:
+    #         data = json.load(file)
+    #         tmp = list()
+    #         for i in range(0,len(data)):
+    #             tmp.append(data[str(i)])
+            
+    #     Ys = tmp
+    #     Xs = [x/100 for x in range(0,len(data))]
+    #     xLabel = "Fraction"
+    #     yLabel = "MDD"
+    #     desiredTitle = ticker+".tw: "+yLabel+" x "+xLabel
+    #     legenOfData = yLabel
+    #     generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 0)
+
+    # graph of MDD and RTN
+    MDDFile = "data/10000_T20_experiment_MDD.json"
+    with open(MDDFile, "r") as file:
+        Xs = list()
+        MDDData = json.load(file)
+        for i in MDDData:
+            Xs.append(MDDData[i])
+   
+    RTNFile = "data/10000_T20_experiment_finalRtn.json"
+    with open(RTNFile, "r") as file:
+        Ys = list()
+        RtnData = json.load(file)
+        for i in RtnData:
+            Ys.append(RtnData[i])
+
+    xLabel = "MDD"
+    yLabel = "Return"
     desiredTitle = yLabel+" x "+xLabel
     legenOfData = yLabel
     generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 0)

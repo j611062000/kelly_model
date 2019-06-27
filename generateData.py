@@ -7,7 +7,7 @@ from loadDataFromJson import loadJson
 from numpy.random import normal, randint
 
 
-
+# rtn.json --> simulated.rtn.json
 def dumpUniformDistribution(numberOfSampling, sourceFileName, numberOfExperiments,  targetFileName = False, dataFromMemory = False):
 
     deserializedData  = loadJson(sourceFileName)

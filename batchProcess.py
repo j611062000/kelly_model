@@ -54,16 +54,32 @@ def processBatchPriceAndDumpToJson(fraction, retrunStyle, experiments, flag, fil
     
     pricedDatas = dict()
 
-    for count, experiment in enumerate(experiments):
-    
-        if flag == 1:
-            # vectorOfReturn = experiment
-            aVectorOfReturn = experiments[experiment]
+    if type(fraction) == list and len(experiments) == 1:
+        for f in fraction:
+            for count, experiment in enumerate(experiments):
+            
+                if flag == 1:
+                    # vectorOfReturn = experiment
+                    aVectorOfReturn = experiments[experiment]
 
-        elif flag == 0 or flag == 2:
-            aVectorOfReturn = experiment
-    
-        pricedDatas[str(count)] = injectFractionToExperiment(aVectorOfReturn, fraction, retrunStyle)
+                elif flag == 0 or flag == 2:
+                    aVectorOfReturn = experiment
+            
+                pricedDatas["f: "+str(f)] = injectFractionToExperiment(aVectorOfReturn, f, retrunStyle)                
+                
+
+    else:
+
+        for count, experiment in enumerate(experiments):
+        
+            if flag == 1:
+                # vectorOfReturn = experiment
+                aVectorOfReturn = experiments[experiment]
+
+            elif flag == 0 or flag == 2:
+                aVectorOfReturn = experiment
+        
+            pricedDatas[str(count)] = injectFractionToExperiment(aVectorOfReturn, fraction, retrunStyle)
 
     with open(fileNameWithoutDotJson + SUFFIX_OF_PRICED_DATA,"w") as file:
         json.dump(pricedDatas, file, indent = INDENT)
@@ -87,16 +103,19 @@ def MDD(prices, maxDrawdown=0):
     return maxDrawdown
 
 
-def processBatchMDDAndDumpToJson(fileNameWithoutDotJson):
+def processBatchMDDAndDumpToJson(sourceFile, targetFile = False):
     
     tmp = dict()
 
-    pricedDatas = loadJson(fileNameWithoutDotJson + SUFFIX_OF_PRICED_DATA)
+    pricedDatas = loadJson(sourceFile + SUFFIX_OF_PRICED_DATA)
     
     for count, key in enumerate(pricedDatas):
         tmp[str(count)] = MDD(pricedDatas[key])
     
-    with open(fileNameWithoutDotJson + SUFFIX_OF_MDD_DATA,"w") as file:
+    if targetFile == False:
+        targetFile = sourceFile
+    
+    with open(targetFile + SUFFIX_OF_MDD_DATA,"w") as file:
         json.dump(tmp, file, indent = INDENT)
 
 
@@ -119,18 +138,21 @@ def findValueInDictByKeyName(keyNames, dictData):
     else:
         return dictData
 
-def batchProcessRtnToNormalizedPrice(fileName):
-    data = loadJson(fileName)
+# rtn.json -- > normalizedPrice.json
+def batchProcessRtnToNormalizedPrice(sourceFile, targetFile):
+    data = loadJson(sourceFile)
     priceData = [1]
     dataLabel = "data"
 
     for rtn in data[dataLabel]:
         priceData.append(priceData[-1]*(1+rtn))
-    print(priceData)
-        
 
+    data[dataLabel] = priceData
 
+    with open(targetFile, "w") as file:
+        json.dump(data, file, indent=4)
 
+#rawData.json --> rtn.json
 def processBatchPriceToRtn(filePath, dumpFileName, dataRange):
     '''
     Input : 
@@ -184,17 +206,27 @@ def processBatchPriceToRtn(filePath, dumpFileName, dataRange):
 if __name__ == "__main__":
 
     tickers = ["1301", "1303", "1326", "2317", "2330", "2412", "2454", "2882", "3008", "6505"]
+    # tickers = ["1301"]
+    for ticker in tickers:    
+        fileDir  = "./data/"+ticker+"/"
+        filePath = "./data/"+ticker+"/rawData.json"
+        # dumpFileName = fileDir + "rtn.json"
+        # dataRange = [datetime(2018,1,15), datetime(2019,1,22)]
+        # processBatchPriceToRtn(filePath,dumpFileName,dataRange)
+        
+        # batchProcessRtnToNormalizedPrice("./data/"+ticker+"/rtn.json", "./data/"+ticker+"/normalizedPrice.json")
 
-    # for ticker in tickers:    
-    #     fileDir  = "./data/"+ticker+"/"
-    #     filePath = "./data/"+ticker+"/rawData.json"
-    #     dumpFileName = fileDir + "rtn.json"
-    #     dataRange = [datetime(2018,1,15), datetime(2019,1,22)]
-    #     processBatchPriceToRtn(filePath,dumpFileName,dataRange)
+        # rtn.json --> injected_f_price.json
+        # experiments ,timePeriod, numberOfExperiment, returnStyle, flag= loadAllDataFromJson("rtn.json", fileDir)
+        # processBatchPriceAndDumpToJson([x/100 for x in range(0,101)], returnStyle, experiments, flag, fileDir+"injected_f")
+
+        # injected_f_price.json --> each_fraction_MDD.json
+        processBatchMDDAndDumpToJson(fileDir+"injected_f", fileDir+"each_fraction")
+        
 
     
+
   
-    # experiments ,timePeriod, numberOfExperiment, returnStyle, flag= loadAllDataFromJson(fileName)
     # experiments = [experiments[0][-251:]]
     
     # tmp = dict()
@@ -208,6 +240,5 @@ if __name__ == "__main__":
     # with open("./data/0050/backTesting/0050_yearly_fraction_MDD.json", "w") as file:
     #     json.dump(tmp,file,indent=4)
 
-    # processBatchPriceAndDumpToJson(fraction, returnStyle, experiments, flag, fileNameWithoutDotJson)
     # processBatchMDDAndDumpToJson(fileNameWithoutDotJson)
     # processBatchFinalRtnAndDumpToJson(fileNameWithoutDotJson)
