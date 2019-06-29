@@ -207,21 +207,29 @@ if __name__ == "__main__":
 
     tickers = ["1301", "1303", "1326", "2317", "2330", "2412", "2454", "2882", "3008", "6505"]
     # tickers = ["1301"]
+
+    mode = 0
+    
     for ticker in tickers:    
         fileDir  = "./data/"+ticker+"/"
         filePath = "./data/"+ticker+"/rawData.json"
-        # dumpFileName = fileDir + "rtn.json"
-        # dataRange = [datetime(2018,1,15), datetime(2019,1,22)]
-        # processBatchPriceToRtn(filePath,dumpFileName,dataRange)
         
-        # batchProcessRtnToNormalizedPrice("./data/"+ticker+"/rtn.json", "./data/"+ticker+"/normalizedPrice.json")
+        if mode == 1:
+            dumpFileName = fileDir + "rtn.json"
+            dataRange = [datetime(2018,1,15), datetime(2019,1,22)]
+            processBatchPriceToRtn(filePath,dumpFileName,dataRange)
+        
+        elif mode == 2:  
+            batchProcessRtnToNormalizedPrice("./data/"+ticker+"/rtn.json", "./data/"+ticker+"/normalizedPrice.json")
 
-        # rtn.json --> injected_f_price.json
-        # experiments ,timePeriod, numberOfExperiment, returnStyle, flag= loadAllDataFromJson("rtn.json", fileDir)
-        # processBatchPriceAndDumpToJson([x/100 for x in range(0,101)], returnStyle, experiments, flag, fileDir+"injected_f")
+        elif mode == 3:
+            # rtn.json --> injected_f_price.json
+            experiments ,timePeriod, numberOfExperiment, returnStyle, flag= loadAllDataFromJson("rtn.json", fileDir)
+            processBatchPriceAndDumpToJson([x/100 for x in range(0,101)], returnStyle, experiments, flag, fileDir+"injected_f")
 
-        # injected_f_price.json --> each_fraction_MDD.json
-        processBatchMDDAndDumpToJson(fileDir+"injected_f", fileDir+"each_fraction")
+        elif mode == 4:
+            # injected_f_price.json --> each_fraction_MDD.json
+            processBatchMDDAndDumpToJson(fileDir+"injected_f", fileDir+"each_fraction")
         
 
     
