@@ -140,14 +140,15 @@ if __name__ == '__main__':
     #     generateVanilaDotGraph(desiredTitle, xLabel, yLabel, Xs, Ys, legenOfData, 0)
 
     # graph of MDD and RTN
-    MDDFile = "data/10000_T20_experiment_MDD.json"
+    dirOfFile = "data/obsolete/"
+    MDDFile = dirOfFile+"10000_T20_experiment_MDD.json"
     with open(MDDFile, "r") as file:
         Xs = list()
         MDDData = json.load(file)
         for i in MDDData:
-            Xs.append(MDDData[i])
+            Xs.append(abs(MDDData[i]))
    
-    RTNFile = "data/10000_T20_experiment_finalRtn.json"
+    RTNFile = dirOfFile+"10000_T20_experiment_finalRtn.json"
     with open(RTNFile, "r") as file:
         Ys = list()
         RtnData = json.load(file)
